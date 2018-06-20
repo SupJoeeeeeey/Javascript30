@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Scoped CSS Variables and JS</title>
 </head>
+
 <body>
   <h2>Update CSS Variables with <span class='hl'>JS</span></h2>
 
@@ -21,10 +23,21 @@
   <img src="https://source.unsplash.com/7bwQXzbF6KE/800x500">
 
   <style>
-
     /*
       misc styles, nothing to do with CSS variables
     */
+
+    :root {
+      --spacing: 10px;
+      --blur: 10px;
+      --base: #ffc600;
+    }
+
+    img {
+      filter: blur(var(--blur));
+      padding: var(--spacing);
+      background-color: var(--base);
+    }
 
     body {
       text-align: center;
@@ -40,12 +53,21 @@
     }
 
     input {
-      width:100px;
+      width: 100px;
     }
   </style>
 
   <script>
+    function handleUpdate() {
+      let unit = this.dataset.sizing || '';
+      document.documentElement.style.setProperty(`--${this.name}`, this.value + unit);
+    }
+    document.querySelectorAll('.controls input').forEach((ele) => {
+      ele.addEventListener('mousemove', handleUpdate);
+      ele.addEventListener('change', handleUpdate);
+    })
   </script>
 
 </body>
+
 </html>
